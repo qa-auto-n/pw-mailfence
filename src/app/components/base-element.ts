@@ -1,6 +1,6 @@
 import {Locator} from '@playwright/test';
-import {getPage} from "../../core/utils/page-utils";
-import {step} from "../../core/fixtures/base-fixture";
+import {getPage} from '../../core/utils/page-utils';
+import {step} from '../../core/utils/decorators/step-decorator';
 
 export class BaseElement {
     locator: Locator;
@@ -15,13 +15,13 @@ export class BaseElement {
         }
     }
 
-    @step("Click on the element")
+    @step('Click on the element')
     async click(options?: {
-        button?: "left"|"right"|"middle";
+        button?: 'left'|'right'|'middle';
         clickCount?: number;
         delay?: number;
         force?: boolean;
-        modifiers?: Array<"Alt"|"Control"|"ControlOrMeta"|"Meta"|"Shift">;
+        modifiers?: Array<'Alt'|'Control'|'ControlOrMeta'|'Meta'|'Shift'>;
         noWaitAfter?: boolean;
         position?: {
             x: number;
@@ -32,23 +32,23 @@ export class BaseElement {
         await this.locator.click(options);
     }
 
-    @step("Check if element is visible")
+    @step('Check if element is visible')
     async isVisible() {
         return this.locator.isVisible();
     }
 
-    @step("Wait till element will be hidden")
+    @step('Wait till element will be hidden')
     async waitForElementToBeHidden(timeout?: number) {
         if (timeout) { await this.locator.waitFor({state: 'hidden', timeout}); }
         if (!timeout) { await this.locator.waitFor({state: 'hidden'}); }
     }
 
-    @step("Drag the element to the target element")
+    @step('Drag the element to the target element')
     async dragAndDrop(targetElement: BaseElement) {
         const page = getPage();
 
-        await this.locator.waitFor({ state: 'visible' });
-        await targetElement.locator.waitFor({ state: 'visible' });
+        await this.locator.waitFor({state: 'visible'});
+        await targetElement.locator.waitFor({state: 'visible'});
 
         const sourceBox = await this.locator.boundingBox();
         const targetBox = await targetElement.locator.boundingBox();
@@ -60,9 +60,9 @@ export class BaseElement {
 
         await page.mouse.move(sourceX, sourceY);
         await page.waitForTimeout(500);
-        await page.mouse.down({ button: 'left' });
-        await page.mouse.move(targetX, targetY, { steps: 10 });
-        await page.mouse.up({ button: 'left' });
-        await targetElement.locator.waitFor({ state: 'attached' });
+        await page.mouse.down({button: 'left'});
+        await page.mouse.move(targetX, targetY, {steps: 10});
+        await page.mouse.up({button: 'left'});
+        await targetElement.locator.waitFor({state: 'attached'});
     }
 }

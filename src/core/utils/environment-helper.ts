@@ -1,21 +1,21 @@
-import {MessagesPage} from "../../app/pages/messages-page";
-import {DocumentsPage} from "../../app/pages/documents-page";
-import {step} from "../fixtures/base-fixture";
+import {step} from './decorators/step-decorator';
+import {TabActionBarElement} from '../../app/components/layout-elements/tab-action-bar-element';
+import {SideBarElement} from '../../app/components/layout-elements/side-bar-element';
 
 export class EnvironmentHelper {
     @step('Clear messages page')
     public static async clearMessages() {
-        await MessagesPage.navigateToInboxSection();
-        await MessagesPage.moveAllMessagesToTrash();
-        await MessagesPage.clickTrashSection();
-        await MessagesPage.deleteAllMessagesFromTrashSection();
+        await SideBarElement.navigateToInboxSection();
+        await TabActionBarElement.moveAllItemsToTrash();
+        await SideBarElement.clickTrashSection();
+        await TabActionBarElement.deleteAllItemsFromTrashSection();
     }
 
-    @step("Clear documents page")
+    @step('Clear documents page')
     public static async clearDocuments(){
-        await DocumentsPage.navigateToMyDocumentsSection();
-        await DocumentsPage.moveAllDocumentsToTrash();
-        await DocumentsPage.clickTrashSection();
-        await DocumentsPage.deleteAllDocumentsFromTrashSection();
+        await SideBarElement.navigateToMyDocumentsSection();
+        await TabActionBarElement.moveAllItemsToTrash();
+        await SideBarElement.clickTrashSection();
+        await TabActionBarElement.deleteAllItemsFromTrashSection();
     }
 }

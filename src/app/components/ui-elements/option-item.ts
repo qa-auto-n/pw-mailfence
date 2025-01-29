@@ -1,4 +1,4 @@
-import { Locator } from '@playwright/test';
+import {Locator} from '@playwright/test';
 import {BaseElement} from '../base-element';
 
 export class OptionItem extends BaseElement {

@@ -1,6 +1,6 @@
-import { BaseElement } from '../base-element';
-import { Locator } from '@playwright/test';
-import {step} from "../../../core/fixtures/base-fixture";
+import {BaseElement} from '../base-element';
+import {Locator} from '@playwright/test';
+import {step} from '../../../core/utils/decorators/step-decorator';
 
 export class CheckboxElement extends BaseElement {
     private readonly locators: Locator[];
@@ -11,7 +11,7 @@ export class CheckboxElement extends BaseElement {
         this.locators = locators;
     }
 
-    @step("Get count of the checkboxes")
+    @step('Get count of the checkboxes')
     async count(): Promise<number> {
         return this.locators.length;
     }
