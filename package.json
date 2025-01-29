@@ -1,0 +1,19 @@
+{
+  "name": "pw-mailfence",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@faker-js/faker": "^9.3.0",
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.7"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "ts-node": "^10.9.2"
+  }
+}
