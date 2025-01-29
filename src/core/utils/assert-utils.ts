@@ -1,7 +1,7 @@
 import {Expect, expect, Locator} from '@playwright/test';
 import {ExpectOptions, MessageAsOptions, SoftOption, TimeoutOption} from './optional-parameter-types';
 import {getLocator} from './locator-utils';
-import {BaseElement} from "../../app/components/base-element";
+import {BaseElement} from '../../app/components/base-element';
 
 /**
  * Returns an Expect object configured with the given soft option.
