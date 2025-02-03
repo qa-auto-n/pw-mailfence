@@ -155,5 +155,3 @@ This project is licensed under the MIT License.
 - **License**: License information for the project.
 
 ---
-
-Feel free to modify this to match any specific details of your setup!
