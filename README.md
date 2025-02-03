@@ -10,6 +10,7 @@ Welcome to the **Playwright Test Automation Project**! This repository demonstra
 - [Tech Stack](#tech-stack)
 - [Setup and Installation](#setup--installation)
 - [Running Tests](#running-tests)
+- [Authentication and Session Management](#authentication-and-session-management)
 - [GitHub Actions](#github-actions)
 - [Linting and Code Quality](#linting-and-code-quality)
 - [License](#license)
@@ -92,6 +93,24 @@ For parallel execution, use Playwright’s built-in functionality:
 ```bash
 npx playwright test --workers=4
 ```
+
+---
+
+## **Authentication and Session Management**
+To improve test efficiency and avoid repeated logins, this project uses Playwright's session storage feature. Here's how it works:
+
+### How It Works
+**Auth Folder**:
+A .auth folder is created in the root of the project to store authenticated session states.
+Each worker (in parallel execution) saves its session state in a separate file (e.g., auth-state-0.json, auth-state-1.json).
+
+**Session Reuse**:
+
+- Before each test, the project checks if an authenticated session exists for the current worker.
+
+- If a session exists, it reuses the saved session state to avoid logging in again.
+
+- If no session exists, it performs the login process and saves the session state for future use.
 
 ---
 
