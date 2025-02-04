@@ -1,33 +1,42 @@
 import {BaseElement} from '../base-element';
 import {Locator} from '@playwright/test';
-import {getLocatorByRole, getLocatorByText} from '../../../core/utils/locator-utils';
+import {getLocator, getLocatorByRole} from '../../../core/utils/locator-utils';
 import {step} from '../../../core/utils/decorators/step-decorator';
-import {HeaderElement} from './header-bar-element';
+import {ComponentsPage} from '../../pages/components-page';
 
 export class SideBarElement extends BaseElement {
 
-    static inboxSection = () => new SideBarElement(getLocatorByRole('treeitem').filter({hasText: 'Inbox'}));
-    static trashSection = () => new SideBarElement(getLocatorByRole('treeitem').filter({hasText: 'Trash'}));
-    static myDocumentsSection = () => new SideBarElement(getLocatorByText('My documents'), 'My Documents Section');
+    private inboxSection = () => new SideBarElement(getLocatorByRole('treeitem').filter({hasText: 'Inbox'}));
+    private trashSection = () => new SideBarElement(getLocatorByRole('treeitem').filter({hasText: 'Trash'}));
+    private myDocumentsSection = () => new SideBarElement(getLocatorByRole('treeitem').filter({hasText: 'My documents'}));
 
     constructor(locator: Locator, name?: string) {
         super(locator, name);
     }
 
     @step('Click on \'Inbox\' section')
-    static async navigateToInboxSection() {
-        await HeaderElement.navigateToMessagesSection();
+    async navigateToInboxSection() {
+        await ComponentsPage.header.navigateToMessagesSection();
         await this.inboxSection().click();
     }
 
     @step('Click on \'Trash\' section')
-    static async clickTrashSection() {
+    async clickTrashSection() {
         await this.trashSection().click();
     }
 
     @step('Navigate to My Documents section')
-    static async navigateToMyDocumentsSection() {
-        await HeaderElement.navigateToDocumentsSection();
+    async navigateToMyDocumentsSection() {
+        await ComponentsPage.header.navigateToDocumentsSection();
         await this.myDocumentsSection().click();
+    }
+
+    @step('Get Trash Section element')
+    async getTrashSection() {
+        return this.trashSection();
+    }
+
+    static getSideBar(): SideBarElement {
+        return new SideBarElement(getLocator('.appLeftPanel'));
     }
 }

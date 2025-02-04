@@ -15,6 +15,7 @@ import {JSHandle} from '@playwright/test';
 import {step} from '../../core/utils/decorators/step-decorator';
 
 export class MessagesPage {
+
     static recipientField = () => new InputElement(getLocatorByRole('row', {name: 'To', exact: true}).getByRole('textbox'));
     static mailSubjectField = () => new InputElement(getLocator('#mailSubject'));
     static newMailButton = () => new ButtonElement(getLocatorByTitle('New'));
