@@ -13,6 +13,7 @@ import {OptionItem} from '../components/ui-elements/option-item';
 import {JSHandle} from '@playwright/test';
 import {step} from '../../core/utils/decorators/step-decorator';
 import {ComponentsPage} from './components-page';
+import {createFileDataTransfer} from '../../core/utils/file-utils';
 
 export class MessagesPage {
 
@@ -31,7 +32,7 @@ export class MessagesPage {
         await this.fillEmailDetails(recipient, mailSubject);
 
         if (fileContent != null) {
-            const dataTransfer = await this.createFileDataTransfer(fileName, fileContent);
+            const dataTransfer = await createFileDataTransfer(fileName, fileContent);
             await this.uploadFileToDropZone(dataTransfer);
         }
 
@@ -50,19 +51,6 @@ export class MessagesPage {
     private static async fillEmailDetails(recipient: string, mailSubject: string) {
         await MessagesPage.recipientField().fill(recipient);
         await MessagesPage.mailSubjectField().fill(mailSubject);
-    }
-
-    @step('Create file data transfer')
-    private static async createFileDataTransfer(fileName: string, fileContent: string) {
-        return await getPage().evaluateHandle(
-            ({content, name}) => {
-                const dt = new DataTransfer();
-                const file = new File([content], name, {type: 'text/plain'});
-                dt.items.add(file);
-                return dt;
-            },
-            {content: fileContent, name: fileName}
-        );
     }
 
     @step('Upload file to drop zone')
