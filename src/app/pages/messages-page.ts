@@ -9,10 +9,10 @@ import {ButtonElement} from '../components/ui-elements/button-element';
 import {DropZoneElement} from '../components/shared/drop-zone-element';
 import {LocatorAssertions} from '../../core/utils/assert-utils';
 import {BaseElement} from '../components/base-element';
-import {SaveDialog} from './save-dialog';
 import {OptionItem} from '../components/ui-elements/option-item';
 import {JSHandle} from '@playwright/test';
 import {step} from '../../core/utils/decorators/step-decorator';
+import {ComponentsPage} from './components-page';
 
 export class MessagesPage {
 
@@ -108,7 +108,7 @@ export class MessagesPage {
         await arrowElement.click();
 
         await this.saveInDocumentsOption().click();
-        await SaveDialog.chooseToSaveInMyDocuments();
+        await ComponentsPage.saveDialog.chooseToSaveInMyDocuments();
     }
 
     @step('Confirm save action')
@@ -117,6 +117,6 @@ export class MessagesPage {
             const button = document.querySelector('#dialBtn_OK');
             return button && getComputedStyle(button).cursor === 'pointer';
         });
-        await SaveDialog.saveChoice();
+        await ComponentsPage.saveDialog.saveChoice();
     }
 }
