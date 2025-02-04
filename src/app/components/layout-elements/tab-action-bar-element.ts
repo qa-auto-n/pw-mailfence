@@ -9,21 +9,21 @@ import {TableElement} from '../shared/table-element';
 
 export class TabActionBarElement extends BaseElement {
 
-    static checkIcon = () => new CheckboxElement(getLocator('.checkIcon'));
-    static spinnerElement = () => new SpinnerElement(getLocator('.loadingIcon'));
-    static deleteButton = () => new ButtonElement(getLocatorByTitle('Delete', {exact: true}));
-    static okButton = () => new ButtonElement(getLocator('#dialBtn_YES'));
-    static emptyMessagesTrashFolderText = () => new TableElement(getLocatorByRole('table').filter({hasText: 'No messages'}).first());
-    static emptyDocumentsTrashFolderText = () => new TableElement(getLocatorByRole('table').filter({hasText: 'no documents'}).first());
-    static selectAllButton = () => new TabActionBarElement(getLocatorByTitle('Select all').locator('div'));
-    static toTrashOption = () => new TabActionBarElement(getLocator('.icon.icon16-Trash'));
+    private checkIcon = () => new CheckboxElement(getLocator('.checkIcon'));
+    private spinnerElement = () => new SpinnerElement(getLocator('.loadingIcon'));
+    private deleteButton = () => new ButtonElement(getLocatorByTitle('Delete', {exact: true}));
+    private okButton = () => new ButtonElement(getLocator('#dialBtn_YES'));
+    private emptyMessagesTrashFolderText = () => new TableElement(getLocatorByRole('table').filter({hasText: 'No messages'}).first());
+    private emptyDocumentsTrashFolderText = () => new TableElement(getLocatorByRole('table').filter({hasText: 'no documents'}).first());
+    private selectAllButton = () => new TabActionBarElement(getLocatorByTitle('Select all').locator('div'));
+    private toTrashOption = () => new TabActionBarElement(getLocator('.icon.icon16-Trash'));
 
-    constructor(locator: Locator, name?: string) {
+    private constructor(locator: Locator, name?: string) {
         super(locator, name);
     }
 
     @step('Delete all items in Trash section')
-    static async deleteAllItemsFromTrashSection() {
+    async deleteAllItemsFromTrashSection() {
         await this.spinnerElement().waitForSpinnerToBeHidden();
 
         if (await this.emptyDocumentsTrashFolderText().isVisible()) return;
@@ -39,9 +39,13 @@ export class TabActionBarElement extends BaseElement {
     }
 
     @step('Move all items to trash section')
-    static async moveAllItemsToTrash() {
+    async moveAllItemsToTrash() {
         await this.spinnerElement().waitForSpinnerToBeHidden();
         await this.selectAllButton().click();
         await this.toTrashOption().click();
+    }
+
+    static getTabActionBar() {
+        return new TabActionBarElement(getLocator('.GCSDBRWBLV.toolbar'));
     }
 }

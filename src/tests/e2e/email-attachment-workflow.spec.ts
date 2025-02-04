@@ -4,7 +4,7 @@ import {DocumentsPage} from '../../app/pages/documents-page';
 import {MessagesPage} from '../../app/pages/messages-page';
 import {LocatorAssertions} from '../../core/utils/assert-utils';
 import {EnvironmentHelper} from '../../core/utils/environment-helper';
-import {SideBarElement} from '../../app/components/layout-elements/side-bar-element';
+import {ComponentsPage} from '../../app/pages/components-page';
 
 test.beforeEach(async () => {
     await test.step('Clear the environment', async () => {
@@ -20,12 +20,12 @@ test('Email attachment workflow with drag-and-drop to trash', async ({}) => {
     const mailSubject = faker.lorem.words(3);
     const fileContent = faker.lorem.sentence();
 
-    await SideBarElement.navigateToInboxSection();
+    await ComponentsPage.sideBar.navigateToInboxSection();
     await MessagesPage.sendEmail(recipient, mailSubject, fileName, fileContent);
     await MessagesPage.saveAttachmentToDocuments(mailSubject, fileName);
 
-    await SideBarElement.navigateToMyDocumentsSection();
+    await ComponentsPage.sideBar.navigateToMyDocumentsSection();
     await DocumentsPage.dragDocumentToTrash(fileName);
-    await SideBarElement.clickTrashSection();
+    await ComponentsPage.sideBar.clickTrashSection();
     await LocatorAssertions.expectElementToBeVisible(await DocumentsPage.getDocumentByTitle(fileName));
 });
